@@ -1,0 +1,17 @@
+{
+  "name": "uffi_rn",
+  "displayName": "uffi_rn",
+  "expo": {
+    "name": "uffi_rn",
+    "slug": "uffi_rn",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
