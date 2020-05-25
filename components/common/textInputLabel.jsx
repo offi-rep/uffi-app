@@ -7,17 +7,16 @@ const TextInputLabel = ({label,value,onChange}) => {
     {label && <Text style={styles.label}>{label}</Text>}
     <TextInput
         style={styles.textInput}
-        onChangeText={onChange}
+        //onChangeText={onChange}
         value={value}
     />
     </View>
 }
 
 TextInputLabel.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    label: PropTypes.string
 }
+
 const styles = StyleSheet.create({
     viewWrapper:{
         flexDirection: "row",
@@ -27,7 +26,8 @@ const styles = StyleSheet.create({
     textInput:{
         height: 40,
         borderColor: 'gray',
-        borderWidth: 1
+        borderWidth: 1,
+        color: '#fff'
     },
     label:{
         color:'#ccc',

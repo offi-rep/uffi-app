@@ -1,20 +1,12 @@
-import axios from 'axios';
-const API_CALL = 'http://localhost:5000/users';
+import { baseApiInstance } from './apiConfig';
+import { handleError } from './handleErrors';
 
-var usersBasicApiInstance = axios.create({
-    baseURL: API_CALL,
-    timeout: 1000,
-    headers: {'X-Custom-Header': 'foobar'}
-});
-const handleError = (err,src = '') => {
-    console.error(err)
-    return null;
-}
-export const getUsers = () => fetch(API_CALL)
-      .then((response) => response.json())
+
+export const getUsers = () => baseApiInstance.get('/users')
+      .then((response) => response.data?.data)
       .catch((error) => handleError(error,'getUsers'))
 
-export const getUserInfo = (id) => usersBasicApiInstance.get(`${API_CALL}/${id}`)
+export const getUserInfo = (id) => baseApiInstance.get(`/users/${id}`)
       .then((response) => response.data)
       .catch((error) => handleError(error,'getUserInfo'))
 
