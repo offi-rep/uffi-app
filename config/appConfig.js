@@ -1,7 +1,7 @@
 
 const config = {
     colors:{
-        bgMainColor: '#916eb9',
+        bgMainColor: '#b5124d' || 'rgb(242, 32, 108)',
         bgSecColor: '#ececec',
         label: '#fff',
         textColor: '#ccc'

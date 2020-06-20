@@ -7,7 +7,6 @@ import { likeAction } from '../../api/userLikes';
 import MatchPopup from '../userMatches/matchPopup';
 import propTypes from 'prop-types';
 import UserKeysProfile from '../userInfo/userKeysProfile';
-
  
 // get user other users options
 // every swipe -> send 

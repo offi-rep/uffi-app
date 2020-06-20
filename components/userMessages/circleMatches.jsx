@@ -1,17 +1,18 @@
 import React,{useState,useContext,useEffect} from 'react';
-import {StyleSheet,View,Text,ScrollView,ActivityIndicator } from 'react-native';
+import {StyleSheet,View,Text,ScrollView,ActivityIndicator,TouchableOpacity } from 'react-native';
 import { ListItem,Avatar,Image } from 'react-native-elements';
 import { firstCapital } from '../common/inputLabel';
 
 // import propTypes from 'prop-types';
  
  
-const CircleMatches = ({matchesList}) => {
+const CircleMatches = ({matchesList,navigation}) => {
     return <ScrollView horizontal={true} contentContainerStyle={styles.matchesWrapper}>
     {
       _.isEmpty(matchesList) ? <Text>No matches yet, start sweeping to find some</Text> : 
       matchesList.map((matchRow,idx) => (
-            <View style={styles.circle} key={matchRow.liked_user_id + idx}>
+        <TouchableOpacity onPress = {() => navigation.navigate('message')}>
+          <View style={styles.circle} key={matchRow.liked_user_id + idx}>
               <Image
                 blurRadius={6}
                 style={{width:50,height:50,borderRadius:10}}
@@ -20,6 +21,7 @@ const CircleMatches = ({matchesList}) => {
               />
                 <Text style={styles.circleText}>{firstCapital(matchRow.name)}</Text>
             </View>
+          </TouchableOpacity>
       ))
     }
           

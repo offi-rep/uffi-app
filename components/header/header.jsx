@@ -17,15 +17,15 @@ const Header = () => {
                 onPress={() => navigation.navigate('userSettings')}
             /> 
             <Text onPress={() => navigation.navigate('userPotentials')}>
-                UFFI
+                Greetz
             </Text>
             <Button
                 onPress={() => {
                     setSelectedUser(null);
                     navigation.navigate('usersPage');
                 }}
-                title="r"
-                color="red"
+                title="."
+                color="black"
             />
    
             <TouchableOpacity onPress={() => navigation.navigate('userMessages')}>

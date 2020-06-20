@@ -1,18 +1,21 @@
 import React,{useState,useContext,useEffect} from 'react';
-import {StyleSheet,View,Text,SafeAreaView,ScrollView,Dimensions,ActivityIndicator } from 'react-native';
+import {StyleSheet,View,Text,SafeAreaView,ScrollView,TouchableOpacity,ActivityIndicator } from 'react-native';
 import { ListItem,Badge,Avatar,Image } from 'react-native-elements';
 import styled from 'styled-components';
-// import propTypes from 'prop-types';
 import { firstCapital } from '../common/inputLabel';
 
-
-const MessagesList = ({msgsList}) => {
+const MessagesList = ({msgsList,navigation}) => {
+    console.log('msgsList: ',msgsList);
+    
     return <ScrollView contentContainerStyle={styles.msgsList}>
         {
          _.isEmpty(msgsList) ? <Text>No messages yet</Text> : 
          msgsList.map(row => (
-
-            <View style={styles.msgRow} key={row.liked_user_id}>
+        <TouchableOpacity
+            onPress = {() => navigation.navigate('Conversation',{trgUser: row})}
+            key={row.liked_user_id}
+        >
+            <View style={styles.msgRow}>
                 <View style = {styles.avatarWrapper}> 
                     <Image
                         blurRadius={6}
@@ -25,7 +28,7 @@ const MessagesList = ({msgsList}) => {
                         value = "4"           // + number (if any unread messages)
                         containerStyle={{ position: 'absolute'}}
                     />
-                </View>
+                </View>  
                 <View style={styles.info}>
                     <Text style={{ fontWeight: 'bold', fontSize: 16,color:'#fff'}}>
                         {firstCapital(row.name)}
@@ -35,7 +38,7 @@ const MessagesList = ({msgsList}) => {
                     </Text>
                 </View>
             </View>
-
+        </TouchableOpacity>
           ))
         }
     </ScrollView>
@@ -47,7 +50,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     flex:1,
     margin: '1%',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    maxHeight: 300,
    },
    msgRow:{
     margin: '1%',

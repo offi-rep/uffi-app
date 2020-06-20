@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { baseApiInstance } from './apiConfig';
-import MainContext from '../components/context/mainContext';
+//import MainContext from '../components/context/mainContext';
 
 const useAxios = (url,method = 'get',data = null) => {
-  const {setAppErrors} = useContext(MainContext);
+  //const {setAppErrors} = useContext(MainContext);
   const [responseData, setResponseData] = useState(null);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const useAxios = (url,method = 'get',data = null) => {
             .then((response) => setResponseData(response.data?.data))
             .catch((error) => {
                 // ({error: error, action:'likeAction'}));
-                setAppErrors(error.message);
+                //setAppErrors(error.message);
             });
         }
         fetchData();

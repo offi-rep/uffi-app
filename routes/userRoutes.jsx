@@ -7,6 +7,7 @@ import UsersPage from '../components/users/usersPage';
 import Header from '../components/header/header';
 import { getConfiguration } from '../config/appConfig';
 import UserSettings from '../components/userSettings/userSettings';
+import Conversation from '../components/userMessages/conversation';
 
 const colors = getConfiguration('colors');
 
@@ -42,6 +43,10 @@ const UserRoutes = props => {
         <AuthenticatedStack.Screen
             name="userMessages"
             component={UserMessages}
+        />
+        <AuthenticatedStack.Screen
+            name="Conversation"
+            component={Conversation}
         />
     </AuthenticatedStack.Navigator>
 }

@@ -6,11 +6,11 @@ import CircleMatches from './circleMatches';
 import { getUserMatches } from '../../api/userMatches';
 import propTypes from 'prop-types';
 
-const UserMessages = () => {
+const UserMessages = ({ navigation }) => {
   const {selectedUser,setIsLoading} = useContext(MainContext);
   const [matchesList,setMatchesList] = useState([]);
   const [msgsList,setMsgsList] = useState([]);
-
+  
   useEffect(() => {getMatches();},[]);
 
   const getMatches = async () => {
@@ -28,8 +28,8 @@ const UserMessages = () => {
     setIsLoading(false);
   }
       return <SafeAreaView style={styles.pageWrapper}>
-          <CircleMatches matchesList={matchesList}/>
-          <MessagesList msgsList={msgsList}/>
+          <CircleMatches matchesList={matchesList} navigation={navigation}/>
+          <MessagesList msgsList={msgsList} navigation={navigation}/>
       </SafeAreaView>
 }
  
