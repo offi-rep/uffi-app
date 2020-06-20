@@ -1,5 +1,5 @@
 
 export const handleError = (err,src = '') => {
-    console.error(err)
+    console.error(err);
     return null;
 }

@@ -1,10 +1,9 @@
 import { baseApiInstance } from './apiConfig';
-import { handleError } from './handleErrors';
 
-// export const likeAction = (data) => baseApiInstance.post('/likes',data)
-//       .then((response) => response.data?.data)
-//       .catch((error) => handleError(error,'getUsers'))
+export const likeAction = (data,trgLiked) => (trgLiked) ?
+      baseApiInstance.put('/matches',data) :
+      baseApiInstance.post('/matches',data) 
+            .then((response) => response.data?.data)
+            .catch((error) => ({error: error, action:'likeAction'}));
 
-export const likeAction = (data) => {
-    console.log(data);
-}
+// ,{headers: {userId: selectedUser?.id}}

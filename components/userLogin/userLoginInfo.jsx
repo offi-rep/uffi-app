@@ -3,19 +3,19 @@ import {StyleSheet,View,Text,SafeAreaView } from 'react-native';
 import propTypes from 'prop-types';
  
  
-const MainSideNav = props => {
-    return <View style={styles.sideNavWrapper}>
-        <Text>MainSideNav</Text>
+const UserLoginInfo = props => {
+    return <View style={styles.nameWrapper}>
+        <Text>UserLoginInfo</Text>
     </View>
 }
  
 const styles = StyleSheet.create({
-   sideNavWrapper: {
+   nameWrapper: {
 
    }
 });
  
-MainSideNav.propTypes = {
+UserLoginInfo.propTypes = {
  
 }
-export default MainSideNav;
+export default UserLoginInfo;

@@ -1,31 +1,50 @@
-import {View} from 'react-native';
-import { ListItem } from 'react-native-elements'
- 
-const UserMsgs = () => {
-    const list = [
-        {
-          name: 'Amy Farha',
-          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-          subtitle: 'Vice President'
-        },
-        {
-          name: 'Chris Jackson',
-          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-          subtitle: 'Vice Chairman'
-        },
-      ];
-      
-      return <View>
-        {
-          list.map((l, i) => (
-            <ListItem
-              key={i}
-              leftAvatar={{ source: { uri: l.avatar_url } }}
-              title={l.name}
-              subtitle={l.subtitle}
-              bottomDivider
-            />
-          ))
-        }
-      </View>
+import React,{useState,useContext,useEffect,useRef} from 'react';
+import MainContext from '../context/mainContext';
+import {SafeAreaView,View,Text,StyleSheet,ScrollView,ActivityIndicator } from 'react-native';
+import MessagesList from './messagesList';
+import CircleMatches from './circleMatches';
+import { getUserMatches } from '../../api/userMatches';
+import propTypes from 'prop-types';
+
+const UserMessages = () => {
+  const {selectedUser,setIsLoading} = useContext(MainContext);
+  const [matchesList,setMatchesList] = useState([]);
+  const [msgsList,setMsgsList] = useState([]);
+
+  useEffect(() => {getMatches();},[]);
+
+  const getMatches = async () => {
+    setIsLoading(true);
+    const data = await getUserMatches(selectedUser?.id);
+    console.log('getUserMatches: ',data);
+    if(!_.isEmpty(data)){
+      const filteredMsgs = [],filteredMatches = [];
+      data.forEach((t) => (t.last_message ? filteredMsgs : filteredMatches).push(t));
+      setMatchesList(filteredMatches);
+      setMsgsList(filteredMsgs);
+      console.log('user Matches: ',filteredMatches);
+      console.log('user Msgs: ',filteredMsgs);
+    }
+    setIsLoading(false);
+  }
+      return <SafeAreaView style={styles.pageWrapper}>
+          <CircleMatches matchesList={matchesList}/>
+          <MessagesList msgsList={msgsList}/>
+      </SafeAreaView>
 }
+ 
+UserMessages.propTypes = {
+ 
+}
+
+const styles = StyleSheet.create({
+  pageWrapper:{
+
+  },
+  divider:{
+    flex:1,
+    height: 20,
+    backgroundColor: '#ccc'
+  }
+});
+export default UserMessages;

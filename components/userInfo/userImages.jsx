@@ -9,6 +9,7 @@ const UserImages = ({userInfo}) => {
 return <View style={styles.mainImgWrapper}>
       <Image
        style={styles.mainAvatar}
+       blurRadius={6}
        source={{uri:userInfo?.gender == 'm' ?
         'https://cdn0.iconfinder.com/data/icons/professional-avatar-5/48/manager_male_avatar_men_character_professions-512.png' : 
         'https://nofiredrills.com/wp-content/uploads/2016/10/myavatar.png'

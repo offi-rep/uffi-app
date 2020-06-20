@@ -19,37 +19,24 @@ const Loader = (props) => {
                 ),
             ).start();   
         },[]);
-        return <Animated.View style={styles({heightAnim,width}).bar}>
-    
-        </Animated.View>
+        return <Animated.View style={styles({animationValue:heightAnim,width}).bar} />
     }
 
     return (
-      <Animated.View style={styles.loaderWrapper}>
-        {
-            <FlatList
-                data={data}
-                contentContainerStyle={styles({width}).list}
-                renderItem={({item,index}) => <Bar width = {width / data.length - (width/10)} index={index + 1}/>}
-                keyExtractor={item => `loader_bar_${item}`}
-            />
-        }
-      </Animated.View>
+        <View style={styles({width}).list}>{
+            data.map((item,index) => <Bar key = {`loader_bar_${item}`} width = {width / data.length - (width/10)} index={index + 1}/>)
+        }</View>
     );
 } 
 
-const styles = ({width,heightAnim}) => StyleSheet.create({
-    loaderWrapper: {
-        backgroundColor: "transparent",
-        justifyContent: 'space-between'
-   },
+const styles = ({width,animationValue}) => StyleSheet.create({
    list:{
         flexDirection: 'row',
         justifyContent: 'space-around',
-        width: width
+        width: width,
    },
    bar:{
-        height: heightAnim,
+        height: animationValue,
         width: width,
         backgroundColor: "rgb(148, 179, 11)"
    }

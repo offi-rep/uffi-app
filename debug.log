@@ -17,3 +17,6 @@
 [0523/105144.018:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0523/105431.211:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0523/110043.459:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0528/123528.184:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0528/123528.231:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0528/123528.231:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
