@@ -5,18 +5,22 @@ import { getUserMessages,sendMessage } from '../../api/userMessages';
 import MainContext from '../context/mainContext';
 import MsgItem from './messageItem';
 import { Button } from 'react-native-elements'
+import {isEmpty} from 'lodash'; 
 
 const Conversation = ({route}) => {
     const {trgUser} = route.params;
     console.log('trgUser: ',trgUser);
-    const {setAppErrors,selectedUser} = useContext(MainContext);
+    const {setAppErrors,setIsLoading} = useContext(MainContext);
     const [pageMessages,setPageMessages] = useState([]);
     const [currentMessage,setCurrentMessage] = useState('');
     const [sendLoading,setSendLoading] = useState(false);
     const scrollViewRef = React.createRef();
 
     useEffect(() => {
+        setIsLoading(true);
         loadMessages();
+        setIsLoading(false);
+
     },[]);
 
     const loadMessages = async() => {
@@ -25,13 +29,12 @@ const Conversation = ({route}) => {
             setAppErrors(msgsResponse.error);
         }else{
             console.log(msgsResponse);
-            setPageMessages(msgsResponse.reverse());
+            setPageMessages(msgsResponse);
         } 
-        setSendLoading(false);
-
+        sendLoading && setSendLoading(false);
     }
     const sendUserMessage = async() => {
-        if(!_.isEmpty(currentMessage)){
+        if(!isEmpty(currentMessage)){
             setSendLoading(true);
             const sendMsg = await sendMessage({secondUserId:trgUser?.liked_user_id,message:currentMessage});
             if(sendMsg.error){
@@ -45,7 +48,7 @@ const Conversation = ({route}) => {
         }
     }
 
-    return <View style={styles.nameWrapper}>
+    return <>
         <View style={styles.userInfo}>
             <Text>{trgUser.name}</Text>
             <Text>{trgUser.age}</Text>
@@ -54,17 +57,17 @@ const Conversation = ({route}) => {
         <ScrollView
             contentContainerStyle={styles.msgsListWrapper} 
             ref={scrollViewRef}
-            //ref={(scrollView) => { this.scrollView = scrollView }}
-            //onContentSizeChange={() => this.scrollViewRef.scrollToEnd({animated: true})}>
-        >
+         >
             {
-                pageMessages.map(msg => <MsgItem
+                pageMessages?.length > 0 ? pageMessages.map(msg => <MsgItem
                     key={msg.id}
                     avatar={null}
                     isRead={msg.is_read}
                     message={msg.message}
                     selfMsg = {msg.to_user_id == trgUser?.liked_user_id}
-                />)
+                />) : trgUser?.liked_user_id && (
+                    <View style={styles.emptyMsgs}><Text>Write something, dont be shy...</Text></View>
+                )
             }
         </ScrollView>
         <View style={styles.writeArea}>
@@ -76,20 +79,17 @@ const Conversation = ({route}) => {
             />
             <Button style={styles.sendBtn} onPress={sendUserMessage} title='send' loading={sendLoading}/>
         </View>
-    </View>
+    </>
 }
 
 const styles = StyleSheet.create({
-   nameWrapper: {
-    flex:1
-   },
    userInfo: {
     flexDirection: 'row',
     justifyContent: 'space-around'
    },
    msgsListWrapper:{
-    maxHeight: 300,
-    padding: '2%'
+    padding: '2%',
+    flexDirection: 'column-reverse'
    },
    writeArea:{
     flexDirection: 'row',
@@ -106,6 +106,11 @@ const styles = StyleSheet.create({
    },
    sendBtn:{
     flex:1
+   },
+   emptyMsgs: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
    }
 });
 

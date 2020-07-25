@@ -1,18 +1,18 @@
 import React,{useState,useContext,useEffect} from 'react';
 import {StyleSheet,View,Text,SafeAreaView,ScrollView,TouchableOpacity,ActivityIndicator } from 'react-native';
 import { ListItem,Badge,Avatar,Image } from 'react-native-elements';
-import styled from 'styled-components';
 import { firstCapital } from '../common/inputLabel';
+import {isEmpty} from 'lodash'; 
 
 const MessagesList = ({msgsList,navigation}) => {
     console.log('msgsList: ',msgsList);
     
     return <ScrollView contentContainerStyle={styles.msgsList}>
         {
-         _.isEmpty(msgsList) ? <Text>No messages yet</Text> : 
+         isEmpty(msgsList) ? <Text>No messages yet</Text> : 
          msgsList.map(row => (
         <TouchableOpacity
-            onPress = {() => navigation.navigate('Conversation',{trgUser: row})}
+            onPress = {() => navigation.navigate('conversation',{trgUser: row})}
             key={row.liked_user_id}
         >
             <View style={styles.msgRow}>
@@ -24,8 +24,8 @@ const MessagesList = ({msgsList,navigation}) => {
                         PlaceholderContent={<ActivityIndicator />}
                     />     
                     <Badge
-                        status={false ? "success" : "error"}      // color based on online/offline status
-                        value = "4"           // + number (if any unread messages)
+                        status={false ? "success" : "error"}     
+                        value = "4"       
                         containerStyle={{ position: 'absolute'}}
                     />
                 </View>  
@@ -48,20 +48,19 @@ const styles = StyleSheet.create({
    msgsList:{
     justifyContent:'center',
     backgroundColor: '#ccc',
-    flex:1,
     margin: '1%',
-    borderRadius: '5px',
-    maxHeight: 300,
+    borderRadius: 5,
+    alignItems: 'center',
+    flex: 1
    },
    msgRow:{
+    flexDirection:'row',
     margin: '1%',
     backgroundColor: '#ccc',
     borderRadius: 6,
-    display: 'grid',
-    gridTemplateColumns: '1fr 3fr',
     alignItems: 'center',
     backgroundColor: '#000',
-    padding: '2%'
+    padding: '2%',
     // borderBottomLeftRadius: 40,
     // borderTopLeftRadius: 40
    },
@@ -69,6 +68,8 @@ const styles = StyleSheet.create({
 
    },
    info:{
+        marginLeft: '2%',
+        height: '100%'
    },
    lastMsg:{
         color:'#fff',
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         height: '1.2em', 
         //whiteSpace: 'nowrap',
-        flex:2
+        flex:2,
    }
 });
 

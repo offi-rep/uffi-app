@@ -5,6 +5,7 @@ import MessagesList from './messagesList';
 import CircleMatches from './circleMatches';
 import { getUserMatches } from '../../api/userMatches';
 import propTypes from 'prop-types';
+import {isEmpty} from 'lodash'; 
 
 const UserMessages = ({ navigation }) => {
   const {selectedUser,setIsLoading} = useContext(MainContext);
@@ -17,7 +18,7 @@ const UserMessages = ({ navigation }) => {
     setIsLoading(true);
     const data = await getUserMatches(selectedUser?.id);
     console.log('getUserMatches: ',data);
-    if(!_.isEmpty(data)){
+    if(!isEmpty(data)){
       const filteredMsgs = [],filteredMatches = [];
       data.forEach((t) => (t.last_message ? filteredMsgs : filteredMatches).push(t));
       setMatchesList(filteredMatches);
@@ -27,24 +28,16 @@ const UserMessages = ({ navigation }) => {
     }
     setIsLoading(false);
   }
-      return <SafeAreaView style={styles.pageWrapper}>
+      return <SafeAreaView style={{flex:1}}>
           <CircleMatches matchesList={matchesList} navigation={navigation}/>
-          <MessagesList msgsList={msgsList} navigation={navigation}/>
+          <View style={{flex:5}}>
+            <MessagesList msgsList={msgsList} navigation={navigation}/>
+          </View>
       </SafeAreaView>
 }
- 
+  
 UserMessages.propTypes = {
  
 }
 
-const styles = StyleSheet.create({
-  pageWrapper:{
-
-  },
-  divider:{
-    flex:1,
-    height: 20,
-    backgroundColor: '#ccc'
-  }
-});
 export default UserMessages;

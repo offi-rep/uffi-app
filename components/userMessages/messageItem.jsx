@@ -24,7 +24,7 @@ const itemStyles = (selfMsg) => StyleSheet.create({
     },
     msg:{
      width: '65%',
-     borderRadius: '10px',
+     borderRadius: 10,
      backgroundColor: '#ccc',
      margin: '2%',
      padding: '2%'

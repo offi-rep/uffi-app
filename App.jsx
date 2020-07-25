@@ -17,11 +17,10 @@ export const App = () => {
   const [selectedUser,setSelectedUser] = useState(null);
   const [isLoading,setIsLoading] = useState(false);
   const [userToken,setUserToken] = useState(null);
-  const [userInfo,updateUserInfo] = useState(null);
   const [appErrors,setAppErrors] = useState(null);
  
   useEffect(() => {
-    selectedUser?.id && setAuthHeader(selectedUser?.id)
+    selectedUser?.id && setAuthHeader(selectedUser?.id);
   },[selectedUser?.id]);
 
   useEffect(() => {
@@ -46,18 +45,18 @@ export const App = () => {
       setIsLoading: setIsLoading,
       userToken:userToken,
       setUserToken:setUserToken,
-      userInfo:userInfo,
-      updateUserInfo: updateUserInfo,
       appErrors: appErrors,
       setAppErrors: setAppErrors
-    }}> 
-      <NavigationContainer fallback={<Text>Loading...</Text>}> 
-            {
-              !userToken ? <UserRoutes />:  <UnAuthRoutes />
-            }
+    }}>     
+    <View style={{ flex: 1 }}>
+      <NavigationContainer fallback={<Text>Loading...</Text>}>
+      {
+          !userToken ? <UserRoutes /> : <UnAuthRoutes />
+      }
       </NavigationContainer>
-      {isLoading && <Wrapper Component = {Loader}/>} 
-      {appErrors && <Wrapper Component={() => <MainError errors={appErrors} />} />}
+    </View>
+      {/* {isLoading && <Wrapper Component = {Loader}/>} 
+      {appErrors && <Wrapper Component={() => <MainError errors={appErrors} />} />} */}
     </MainContextProvider> 
   )
 }

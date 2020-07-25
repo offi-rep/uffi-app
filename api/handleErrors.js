@@ -1,5 +1,7 @@
 
-export const handleError = (err,src = '') => {
+export const handleError = (err,customError = '') => {
     console.error(err);
-    return null;
+    return {
+        error: customError.length > 0 ? customError : err
+    };
 }

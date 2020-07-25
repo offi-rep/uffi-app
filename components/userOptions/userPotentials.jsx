@@ -7,14 +7,15 @@ import { likeAction } from '../../api/userLikes';
 import MatchPopup from '../userMatches/matchPopup';
 import propTypes from 'prop-types';
 import UserKeysProfile from '../userInfo/userKeysProfile';
- 
+import {isEmpty} from 'lodash'; 
+
 // get user other users options
 // every swipe -> send 
 // when idx == 6 -> reload next 10 potentials
 
 // selectedUser the main user that logged in
 const UserPotentials = () => {
-    const {setIsLoading,selectedUser,setSelectedUser,setAppErrors} = useContext(MainContext);
+    const {setIsLoading,selectedUser,setAppErrors} = useContext(MainContext);
     const [currentBatch,setCurrentBatch] = useState(null);      // holds current batch (10 potentials list)
     const [currentIdxShow,setCurrentIdxShow] = useState(0);     // pointer to current potential
     const [nextBatch,setNextBatch] = useState(null);            // temporary holds the next batch
@@ -23,7 +24,7 @@ const UserPotentials = () => {
     useEffect(() => {loadPotentials()},[]);
 
     useEffect(() => {
-        if(!_.isEmpty(currentBatch)){
+        if(!isEmpty(currentBatch)){
             console.log('current: ',currentBatch[currentIdxShow]);
         }
         if(currentIdxShow === 1){   
@@ -72,11 +73,15 @@ const UserPotentials = () => {
         redirectToMsg && alert('need to redirect');
     }
     return <>
-        {!_.isEmpty(currentBatch) && currentBatch[currentIdxShow] && <>
+        {!isEmpty(currentBatch) && currentBatch[currentIdxShow] && <>
         <UserKeysProfile userInfo={currentBatch[currentIdxShow]} />
         <View style={styles.btnsWrapper}>
-            <TouchableOpacity style={[styles.likeBtn,styles.btn]} onPress={() => swipeOnUser(true)}><Text>LIKE</Text></TouchableOpacity>
-            <TouchableOpacity style={[styles.disLikeBtn,styles.btn]} onPress={() => swipeOnUser(false)}><Text>NOT</Text></TouchableOpacity>
+            <TouchableOpacity style={[styles.likeBtn,styles.btn]} onPress={() => swipeOnUser(true)}>
+                <Text>LIKE</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.disLikeBtn,styles.btn]} onPress={() => swipeOnUser(false)}>
+                <Text>NOT</Text>
+            </TouchableOpacity>
         </View>
         {matchedUser &&
             <MatchPopup
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green'
    },
    disLikeBtn:{
-    backgroundColor: 'red'
+    backgroundColor: '#c5074c'
    },
    btnsWrapper:{
     flexDirection: 'row',

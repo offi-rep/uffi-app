@@ -6,15 +6,19 @@ import PropTypes from 'prop-types';
 
 export const getUsers = () => baseApiInstance.get('/users')
       .then((response) => response.data?.data)
-      .catch((error) => handleError(error,'getUsers'))
+      .catch((error) => handleError(error,'getUsers'));
 
 export const getUserInfo = (id) => baseApiInstance.get(`/users/${id}`)
       .then((response) => response.data)
-      .catch((error) => handleError(error,'getUserInfo'))
+      .catch((error) => handleError(error,'getUserInfo'));
+
+export const updateUser = (data) => baseApiInstance.put(`/users`,data)
+      .then((response) => response.data)
+      .catch((error) => handleError(error,'getUserInfo'));
 
 export const signUpUser = (userDetails) => baseApiInstance.post('/signup',userDetails)
       .then((response) => response?.data?.data)
-      .catch((error) => handleError(error,'signup'))
+      .catch((error) => handleError(error,'signup'));
 
 export const creationUser = ({
       name='',age = 25,gender = '',location = '',occupation = '',height = 189,bodytype = '',education = '',freetxt = '',

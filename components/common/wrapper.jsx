@@ -14,29 +14,28 @@ const Wrapper = ({Component}) => {
                 }
             ).start();   
     },[]);
-
-    return <Animated.View style={wrapperStyle(fadeInVal).wrapper}>
+    
+    const wrapperStyle = StyleSheet.create({
+        wrapper: {
+            backgroundColor: "transparent",
+            justifyContent: 'space-between',
+            position: 'absolute',
+            backgroundColor: 'rgba(52, 52, 52, 0.8)',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            opacity: 1,
+            zIndex: 100
+       },
+      });
+    return <Animated.View style={wrapperStyle.wrapper}>
         <Component/>
     </Animated.View>
-
 }
  
-const wrapperStyle = (fadeInVal) => StyleSheet.create({
-    wrapper: {
-        backgroundColor: "transparent",
-        justifyContent: 'space-between',
-        position: 'fixed',
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: fadeInVal,
-        zIndex: 100
-   },
-  });
 Wrapper.propTypes = {
  
 }

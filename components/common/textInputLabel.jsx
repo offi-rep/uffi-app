@@ -7,7 +7,6 @@ const TextInputLabel = ({label,value,onChange}) => {
     {label && <Text style={styles.label}>{label}</Text>}
     <TextInput
         style={styles.textInput}
-        //onChangeText={onChange}
         value={value}
     />
     </View>

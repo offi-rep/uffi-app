@@ -8,31 +8,35 @@ import { login } from '../../api/userLogin';
 import { creationUser,signUpUser } from '../../api/userBasics';
 import { handleError } from '../../api/handleErrors';
 import MainContext from '../context/mainContext';
+import {isEmpty} from 'lodash'; 
 
 const UserLogin = props => {
     const {setUserToken} = useContext(MainContext);
+
     const responseGoogle = async(data) => {
         console.log(data);
         const email = data?.profileObj?.email;
-        if(!_.isEmpty(email)){
+        if(!isEmpty(email)){
             const loginRes = await login(email);
-            console.log(loginRes);
-            if(loginRes){
-                // user already exists  
-                setUserToken(loginRes);           
-            }else{
-                // creation phase
-                const conf = creationUser({name:data?.profileObj?.givenName,email:email,bodytype:'fat'});
-                console.log(conf);
-                try{
-                    const signupResponse = await signUpUser(conf);
-                    if(signupResponse){
-                        console.log('signupResponse: ',signupResponse);
-                        setUserToken(signupResponse); 
+            if(!loginRes.error){
+                console.log(loginRes);
+                if(loginRes){
+                    // user already exists  
+                    setUserToken(loginRes);           
+                }else{
+                    // creation phase
+                    const conf = creationUser({name:data?.profileObj?.givenName,email:email,bodytype:'fat'});
+                    console.log(conf);
+                    try{
+                        const signupResponse = await signUpUser(conf);
+                        if(signupResponse){
+                            console.log('signupResponse: ',signupResponse);
+                            setUserToken(signupResponse); 
+                        }
                     }
-                }
-                catch(err){
-                    handleError(err);
+                    catch(err){
+                        handleError(err, 'cannot create new user');
+                    }
                 }
             }
         }
